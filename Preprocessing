@@ -1,0 +1,37 @@
+
+#Stemming 
+import nltk
+nltk.download('punkt')
+from nltk.stem import PorterStemmer
+nltk.download('all')
+from nltk.stem import LancasterStemmer
+
+#create an object of class PorterStemmer
+porter = PorterStemmer()
+lancaster=LancasterStemmer()
+print("Porter Stemmer")
+print(porter.stem("dogs"))
+
+from nltk.tokenize import sent_tokenize, word_tokenize
+def stemSentence(sentence):
+    token_words=word_tokenize(sentence)
+    token_words
+    stem_sentence=[]
+    for word in token_words:
+        stem_sentence.append(porter.stem(word))
+        stem_sentence.append(" ")
+    return "".join(stem_sentence)
+
+x=stemSentence(sentence)
+print(x)
+
+#Pad sequencing 
+from keras.preprocessing.sequence import pad_sequences
+sequences = [
+	[1, 2, 3, 4],
+	   [1, 2, 3],
+		     [1]
+	]
+# truncate sequence
+truncated= pad_sequences(sequences, maxlen=2)
+print(truncated)
