@@ -1,0 +1,19 @@
+(x_train, y_train), (x_test, y_test) = load_data(num_words=num_classification_words)
+
+lstm_input = Input(shape=(100,))
+embedding = Embedding(num_classification_words, 128, input_length=words_limit)(lstm_input)
+simple_lstm = LSTM(128)(embedding)
+dropout = Dropout(0.3)(simple_lstm)
+dense = Dense(1)(dropout)
+activation = Activation('sigmoid')(dense)
+model = Model(lstm_input, activation)
+model.summary()
+
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model.fit(x_train_seq, y_train, batch_size=10, epochs=50, validation_data=(x_test_seq, y_test))
+
+score, acc = model.evaluate(x_test_seq, y_test, batch_size=32)
+print("Score: ",score)
+print("Accuracy: ",acc)
+
+print(classification_report(y_test, y_pred))
